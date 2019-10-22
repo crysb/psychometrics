@@ -1,51 +1,92 @@
-### Scoring the Big Five Personality Inventory
+##############################################
+##   Big Five Personality Inventory (BFI)   ##
+##############################################
+#
+# Scoring script by Crystal Bae
+# Last updated October 2019
 
-## BFI Questions
-# For the columns that contain your BFI question responses:
-BF01 <- responses[,26]
-BF02 <- responses[,27]
-BF03 <- responses[,28]
-BF04 <- responses[,29]
-BF05 <- responses[,30]
-BF06 <- responses[,31]
-BF07 <- responses[,32]
-BF08 <- responses[,33]
-BF09 <- responses[,34]
-BF10 <- responses[,35]
-BF11 <- responses[,36]
-BF12 <- responses[,37]
-BF13 <- responses[,38]
-BF14 <- responses[,39]
-BF15 <- responses[,40]
-BF16 <- responses[,41]
-BF17 <- responses[,42]
-BF18 <- responses[,43]
-BF19 <- responses[,44]
-BF20 <- responses[,45]
-BF21 <- responses[,46]
-BF22 <- responses[,47]
-BF23 <- responses[,48]
-BF24 <- responses[,49]
-BF25 <- responses[,50]
-BF26 <- responses[,51]
-BF27 <- responses[,52]
-BF28 <- responses[,53]
-BF29 <- responses[,54]
-BF30 <- responses[,55]
-BF31 <- responses[,56]
-BF32 <- responses[,57]
-BF33 <- responses[,58]
-BF34 <- responses[,59]
-BF35 <- responses[,60]
-BF36 <- responses[,61]
-BF37 <- responses[,62]
-BF38 <- responses[,63]
-BF39 <- responses[,64]
-BF40 <- responses[,65]
-BF41 <- responses[,66]
-BF42 <- responses[,67]
-BF43 <- responses[,68]
-BF44 <- responses[,69]
+
+#########
+# Step 1. Load the tidyverse
+# Note: install.packages("tidyverse") if first time using tidyverse on your machine
+
+library(tidyverse)
+
+
+#########
+# Step 2. Read in data
+
+# If your data is in another directory:
+# setwd("R:/users/cbae/DATA STORAGE/BigFiveInventory")
+
+df <- read_csv("Pre-Study-Questionnaire.csv") ## Point to your file
+
+
+#########
+# Step 3. Subset dataframe
+
+# Subset basic demographics
+PID <- df[,3]
+date <- df[,4]
+sex <- df[,8]
+age <- df[,9]
+
+# Extract the columns that contain your BFI question BFI:
+BFI <- df[,26:69]
+
+# Check your data
+summary(BFI)
+# Should have 44 variables, 1 for each question of the BFI
+# Each question should have a min of at least 1, and a max no larger than 5
+
+BF01 <- BFI[,1]
+BF02 <- BFI[,2]
+BF03 <- BFI[,3]
+BF04 <- BFI[,4]
+BF05 <- BFI[,5]
+BF06 <- BFI[,6]
+BF07 <- BFI[,7]
+BF08 <- BFI[,8]
+BF09 <- BFI[,9]
+BF10 <- BFI[,10]
+BF11 <- BFI[,11]
+BF12 <- BFI[,12]
+BF13 <- BFI[,13]
+BF14 <- BFI[,14]
+BF15 <- BFI[,15]
+BF16 <- BFI[,16]
+BF17 <- BFI[,17]
+BF18 <- BFI[,18]
+BF19 <- BFI[,19]
+BF20 <- BFI[,20]
+BF21 <- BFI[,21]
+BF22 <- BFI[,22]
+BF23 <- BFI[,23]
+BF24 <- BFI[,24]
+BF25 <- BFI[,25]
+BF26 <- BFI[,26]
+BF27 <- BFI[,27]
+BF28 <- BFI[,28]
+BF29 <- BFI[,29]
+BF30 <- BFI[,30]
+BF31 <- BFI[,31]
+BF32 <- BFI[,32]
+BF33 <- BFI[,33]
+BF34 <- BFI[,34]
+BF35 <- BFI[,35]
+BF36 <- BFI[,36]
+BF37 <- BFI[,37]
+BF38 <- BFI[,38]
+BF39 <- BFI[,39]
+BF40 <- BFI[,40]
+BF41 <- BFI[,41]
+BF42 <- BFI[,42]
+BF43 <- BFI[,43]
+BF44 <- BFI[,44]
+
+
+#########
+# Step 4. Reverse code appropriate questions
 
 ## Reverse-code Q #s: 
 # 2, 6, 8, 9, 12, 18,
@@ -68,7 +109,9 @@ BF37 <- 6-BF37
 BF41 <- 6-BF41
 BF43 <- 6-BF43
 
-## Scoring BFI domains
+
+#########
+# Step 5. Score each of the five BFI domains
 
 # Extraversion: 1, 6R, 11, 16, 21R, 26, 31R, 36
 BFI_ext <- (BF01+BF06+BF11+BF16+BF21+BF26+BF31+BF36)/8
@@ -84,3 +127,16 @@ BFI_neu <- (BF04+BF09+BF14+BF19+BF24+BF29+BF34+BF39)/8
 
 # Openness: 5, 10, 15, 20, 25, 30, 35R, 40, 41R, 44
 BFI_ope <- (BF05+BF10+BF15+BF20+BF25+BF30+BF35+BF40+BF41+BF44)/10
+
+
+#########
+# Step 6. Output to CSV
+# Outputs a CSV table with PID and BFI dimensions
+
+output <- data.frame(PID[], BFI_agr[], BFI_con[], BFI_ext[], BFI_neu[], BFI_ope[])
+colnames(output) <- c("PID", "BFI_agr", "BFI_con", "BFI_ext", "BFI_neu", "BFI_ope")
+
+# Write to CSV
+# path = filename to be written
+write_csv(output, path = "output_BFI.csv", append = FALSE, col_names = TRUE) 
+

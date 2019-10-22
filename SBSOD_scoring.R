@@ -101,6 +101,8 @@ summary(SBSOD)
 # Outputs a CSV table with PID and SBSOD
 
 output <- data.frame(PID[], SBSOD[])
+colnames(output) <- c("PID", "SBSOD")
 
-write_csv(output, path = "output_SBSOD.csv", append = FALSE, col_names = TRUE) # path is filename to be written
+# path = filename to be written
+write_csv(output, path = "output_SBSOD.csv", append = FALSE, col_names = TRUE)
 
